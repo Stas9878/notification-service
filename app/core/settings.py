@@ -7,11 +7,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str
 
     # RabbitMQ
-    RMQ_USER: str
-    RMQ_PASS: str
-    RMQ_HOST: str
-    RMQ_PORT: int
-    RMQ_QUEUE: str
+    RABBITMQ_URL: str
 
     # Email
     SMTP_SERVER: str
