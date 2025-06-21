@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
-from app.core.logs import setup_logging
+from app.core.logging import setup_logging
 
 
 setup_logging()
