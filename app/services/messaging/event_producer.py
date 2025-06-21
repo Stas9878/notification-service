@@ -2,7 +2,7 @@ import logging
 import aio_pika
 
 from app.core.rabbit import get_rabbitmq_connection
-from app.services.events.schemas import EventMessage
+from app.schemas.event import EventMessage
 
 logger = logging.getLogger(__name__)
 

@@ -4,15 +4,15 @@ import asyncio
 import aio_pika
 
 from app.core.rabbit import get_rabbitmq_connection
-from app.services.rabbit.event_consumer import send_notification
+from app.services.notification import send_notification
 
 logger = logging.getLogger(__name__)
 
 
-async def process_message(message: aio_pika.IncomingMessage):
+async def process_message(message: aio_pika.IncomingMessage) -> None:
     async with message.process():
         event = json.loads(message.body.decode())
-        logger.info(f"[x] Received event: {event}")
+        logger.info(f'[x] Received event: {event}')
 
         try:
             await send_notification(event['user_id'], event['type'], event['data'])
@@ -21,7 +21,7 @@ async def process_message(message: aio_pika.IncomingMessage):
             raise err
 
 
-async def start_consumer(queue_name: str = "notifications_queue"):
+async def start_consumer(queue_name: str = 'notifications_queue') -> None:
     async with get_rabbitmq_connection() as connection:
         channel = await connection.channel()
         await channel.set_qos(prefetch_count=100)
