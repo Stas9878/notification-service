@@ -20,3 +20,6 @@ RUN uv sync --no-install-project
 
 # Copy all project
 COPY . ./
+
+# Create folder for logs
+RUN mkdir -p logs/
