@@ -5,6 +5,7 @@ import aio_pika
 
 from app.core.rabbit import get_rabbitmq_connection
 from app.services.notification import send_notification
+from app.core.logging import setup_logging
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +18,7 @@ async def process_message(message: aio_pika.IncomingMessage) -> None:
         try:
             await send_notification(event['user_id'], event['type'], event['data'])
         except Exception as err:
-            logging.critical(f'[x] Error processing message: {err}')
+            logger.critical(f'[x] Error processing message: {err}')
             raise err
 
 
@@ -28,7 +29,11 @@ async def start_consumer(queue_name: str = 'notifications_queue') -> None:
 
         queue = await channel.declare_queue(queue_name, durable=True)
 
-        logging.info('[*] Waiting for messages. To exit press CTRL+C')
+        logger.info('[*] Waiting for messages. To exit press CTRL+C')
         await queue.consume(process_message)
-
         await asyncio.Future()  # infinite cycle
+
+
+if __name__ == "__main__":
+    setup_logging()
+    asyncio.run(start_consumer())

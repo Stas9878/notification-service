@@ -1,3 +1,6 @@
+[tool.taskipy.tasks]
+worker = "python -m app.services.messaging.event_consumer"
+
 [project]
 name = "notification-service"
 version = "0.1.0"
@@ -13,5 +16,6 @@ dependencies = [
     "pyyaml>=6.0.2",
     "sqlalchemy>=2.0.41",
     "sqlmodel>=0.0.24",
+    "taskipy>=1.14.1",
     "uvicorn>=0.34.3",
 ]
