@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def get_rabbitmq_connection() -> AsyncGenerator[aio_pika.Connection, None]:
     try:
-        connection = await aio_pika.connect_robust(settings.RABBITMQ_URL)
+        connection = await aio_pika.connect_robust(settings.rabbitmq_url)
         yield connection
     except Exception as err:
         logger.critical(f'[x] RabbitMQ connection error: {err}')

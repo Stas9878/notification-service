@@ -8,11 +8,11 @@ from sqlalchemy.ext.asyncio import AsyncEngine
 from app.core.session import engine 
 from app.core.settings import settings
 
-from app.applications.events.models import Notification
+from app.models.notification import Notification
 
 # this is the Alembic Config object, which we get from the file configuration.
 config = context.config
-config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
+config.set_main_option("sqlalchemy.url", settings.database_url)
 
 # Interpret the config file for Python logging.
 if config.config_file_name is not None:
