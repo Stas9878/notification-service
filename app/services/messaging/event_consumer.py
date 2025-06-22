@@ -19,7 +19,7 @@ async def process_message(message: aio_pika.IncomingMessage) -> None:
             await send_notification(event['user_id'], event['type'], event['data'])
         except Exception as err:
             logger.critical(f'[x] Error processing message: {err}')
-            raise err
+            return False
 
 
 async def start_consumer(queue_name: str = 'notifications_queue') -> None:
@@ -36,4 +36,5 @@ async def start_consumer(queue_name: str = 'notifications_queue') -> None:
 
 if __name__ == "__main__":
     setup_logging()
-    asyncio.run(start_consumer())
+    exit_code = 0 if asyncio.run(start_consumer()) else 1
+    exit(exit_code)
